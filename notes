@@ -1,0 +1,439 @@
+#CREATE DATABASE [IF NOT EXISTS] database_name;
+create database employees;
+create database amazon_company;
+
+CREATE TABLE movie_table (
+  movie_id int(11) NOT NULL auto_increment,
+  title varchar(50) NOT NULL,
+  rating varchar(5) NOT NULL,
+  category varchar(10) NOT NULL,
+  purchased date NOT NULL,
+  PRIMARY KEY(movie_id)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('83','Big Advenure','G','family','2002-03-06');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('89','Shiny Things, The','PG','drama','2002-03-06');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('88','End of the Line','R','misc','2001-02-05');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('87','A Rat named Darcy','G','family','2003-04-19');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('86','Head First Rules','R','action','2003-04-19');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('85','Mad Clowns','R','horror','1999-11-20');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('84','Greg: The Untold Story','PG','action','2001-02-05');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('93','Potentially Habitable Planet','PG','scifi','2001-02-05');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('92','Weird Things from Space','PG','scifi','2003-04-19');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('91','Shark Bait','G','misc','1999-11-20');
+INSERT INTO `movie_table` (`movie_id`,`title`,`rating`,`category`,`purchased`) VALUES ('90','Take it Back','R','comedy','2001-02-05');
+
+
+
+The SELECT statement is used to select data from a database.
+
+The data returned is stored in a result table, called the result-set.
+SELECT Syntax
+SELECT column1, column2, ...
+FROM table_name; 
+
+for Selecting compelete table
+Select * from tablename;
+
+
+SELECT CustomerName, City FROM Customers;
+
+SELECT * FROM Customers;
+
+
+
+
+Querying Single Table
+fetch id and name columns 
+
+SELECT id, name FROM city;
+
+fetch city names sorted by the rating column in ASCending order:
+SELECT name FROM city ORDER BY rating [ASC];
+
+fetch city names sorted by the rating column in DECending order:
+SELECT name FROM city ORDER BY rating [DESC];
+
+ALIASES
+
+COLUMNS
+
+SELECT name AS city_name from city;
+
+
+SELECT DISTINCT Examples
+
+The following SQL statement selects only the DISTINCT values from the "Country" column in the "Customers" table: it removes duplicates and gives the Unique values
+
+SELECT DISTINCT Country FROM Customers;
+
+Filter the Output using Comparison Operators
+
+fetch names of cities that have a rating above 3;
+
+SELECT name FROM city WHERE rating >3;
+
+fetch names of cities that are neither Berlin nor Madrid:
+
+SELECT name FROM city WHERE name != 'Berlin' AND name != 'Madrid';
+
+AND
+0 0 0
+0 1 0
+1 0 0
+1 1 1
+
+OR
+0 0 0
+0 1 1
+1 0 1
+1 1 1
+
+!
+0 will be 1
+1 will be 0
+
+
+
+fetch name of cities like '_ublin';
+
+SELECT name FROM city WHERE name LIKE '_ublin';
+
+
+Other Operators 
+
+fetch names of cities that have a population between 500k and 5M:
+
+SELECT name from city WHERE population BETWEEN 500000 AND 5000000;
+
+
+fetch names of cities that dont miss a rating value:
+SELECT name FROM city WHERE rating IS NOT NULL;
+
+Fetch names of cities that are in countries with IDs 1, 4, 7 or 8;
+
+SELECT name FROM city WHERE country_id IN (1, 4, 7, 8);
+SELECT Count(*) AS DistinctCountries
+FROM (SELECT DISTINCT Country FROM Customers);
+
+
+
+Operators 
+
+= 	Equal 	
+> 	Greater than 	
+< 	Less than 	
+>= 	Greater than or equal 	
+<= 	Less than or equal 	
+<> 	Not equal. Note: In some versions of SQL this operator may be written as != 	
+BETWEEN 	Between a certain range 	
+LIKE 	Search for a pattern 	
+IN 	To specify multiple possible values for a column
+
+
+
+
+example for OR 
+
+SELECT * FROM Customers
+WHERE City='Berlin' OR City='München';
+
+example for NOT
+
+SELECT * FROM Customers
+WHERE NOT Country='Germany';
+
+Combining bot AND and OR Operators.
+SELECT * FROM Customers
+WHERE Country='Germany' AND (City='Berlin' OR City='München');
+
+
+
+
+https://www.w3resource.com/sql/joins/perform-an-equi-join.php
+
+
+-------------------------------------------------------
+
+
+Different Types of SQL JOINs
+
+Here are the different types of the JOINs in SQL:
+
+    (INNER) JOIN: Returns records that have matching values in both tables
+    LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+    RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+    FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+-----------------------------------------------------------------------------------------------
+
+
+TABLES
+SELECT co.name, c1.name FROM city AS c1 JOIN country AS co ON c1.country_id = co.id;
+
+
+
+We can use the CREATE TRIGGER statement for creating a new trigger in MySQL. Below is the syntax of creating a trigger in MySQL:
+
+    CREATE TRIGGER trigger_name    
+        (AFTER | BEFORE) (INSERT | UPDATE | DELETE)  
+             ON table_name FOR EACH ROW    
+             BEGIN    
+            --variable declarations    
+            --trigger code    
+            END;
+            
+            
+     CREATE TABLE employee(  
+        name varchar(45) NOT NULL,    
+        occupation varchar(35) NOT NULL,    
+        working_date date,  
+        working_hours varchar(10)  
+    );
+INSERT INTO employee VALUES    
+    ('Robin', 'Scientist', '2020-10-04', 12),  
+    ('Warner', 'Engineer', '2020-10-04', 10),  
+    ('Peter', 'Actor', '2020-10-04', 13),  
+    ('Marco', 'Doctor', '2020-10-04', 14),  
+    ('Brayden', 'Teacher', '2020-10-04', 12),  
+    ('Antonio', 'Business', '2020-10-04', 11);
+    
+mysql> DELIMITER //  
+    mysql> Create Trigger before_insert_empworkinghours   
+    BEFORE INSERT ON employee FOR EACH ROW  
+    BEGIN  
+    IF NEW.working_hours < 0 THEN SET NEW.working_hours = 0;  
+    END IF;  
+    END //
+    
+    
+mysql> INSERT INTO employee VALUES    
+    ('Markus', 'Former', '2020-10-08', 14);  
+      
+    mysql> INSERT INTO employee VALUES    
+    ('Alexander', 'Actor', '2020-10-012', -13);
+    
+    
+Select * from employee;
+
+
+MySQL View
+
+A view is a database object that has no values. Its contents are based on the base table. It contains rows and columns similar to the real table. In MySQL, the View is a virtual table created by a query by joining one or more tables.
+
+Syntax
+
+Following is the syntax to create a view in MySQL:
+
+    CREATE [OR REPLACE] VIEW view_name AS    
+    SELECT columns    
+    FROM tables    
+    [WHERE conditions];
+    
+    
+CREATE VIEW trainer AS    
+SELECT course_name, trainer     
+ FROM courses;
+
+
+
+
+
+-----------------------------------------
+Stored Procedures
+--Reduce network traffic
+--centralize business logic in the database
+--make database more secure
+
+
+use sample database for this
+--------------------------------
+
+SELECT 
+    customerName, 
+    city, 
+    state, 
+    postalCode, 
+    country
+FROM
+    customers
+ORDER BY customerName;
+
+
+
+If you want to save this query on the database server for execution later, one way to do it is to use a stored procedure.
+
+DELIMITER $$ 
+
+CREATE PROCEDURE GetCustomers()
+BEGIN
+	SELECT 
+		customerName, 
+		city, 
+		state, 
+		postalCode, 
+		country
+	FROM
+		customers
+	ORDER BY customerName;    
+END$$
+DELIMITER ;
+
+
+CALL GetCustomers();
+
+
+
+Once changing the delimiter, you can use the new delimiter to end a statement as follows:
+
+DELIMITER //
+
+SELECT * FROM customers //
+
+SELECT * FROM products //
+
+
+or
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_name()
+BEGIN
+  -- statements
+END $$
+
+DELIMITER ;
+
+------------------
+creating the procedure
+
+use 'models';
+DROP procedure IF EXISTS 'GetAllCustomers';
+
+DELIMITER $$
+USE 'models'$$
+CREATE PROCEDURE 'GetAllCustomers'()
+BEGIN
+	SELECT * FROM customers;
+END$$
+
+
+
+
+
+-----------------------
+
+Passing parameters
+--------------------------
+
+
+DELIMITER //
+
+CREATE PROCEDURE GetOfficeByCountry(
+	IN countryName VARCHAR(255)
+)
+BEGIN
+	SELECT * 
+ 	FROM offices
+	WHERE country = countryName;
+END //
+
+DELIMITER ;
+
+CALL GetOfficeByCountry('USA');
+
+CALL GetOfficeByCountry('France');
+
+
+
+
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GetOrderCountByStatus (
+	IN  orderStatus VARCHAR(25),
+	OUT total INT
+)
+BEGIN
+	SELECT COUNT(orderNumber)
+	INTO total
+	FROM orders
+	WHERE status = orderStatus;
+END$$
+
+DELIMITER ;
+
+
+CALL GetOrderCountByStatus('Shipped',@total);
+SELECT @total;
+
+
+CALL GetOrderCountByStatus('in process',@total);
+SELECT @total AS  total_in_process;
+
+
+
+
+
+
+-----------------
+DELIMITER $$
+
+CREATE PROCEDURE SetCounter(
+	INOUT counter INT,
+    IN inc INT
+)
+BEGIN
+	SET counter = counter + inc;
+END$$
+
+DELIMITER ;
+
+
+SET @counter = 1;
+CALL SetCounter(@counter,1); -- 2
+CALL SetCounter(@counter,1); -- 3
+CALL SetCounter(@counter,5); -- 8
+SELECT @counter; 
+
+
+
+---------------------
+variables
+
+--------------
+DELIMITER $$
+
+CREATE PROCEDURE GetTotalOrder()
+BEGIN
+	DECLARE totalOrder INT DEFAULT 0;
+    
+    SELECT COUNT(*) 
+    INTO totalOrder
+    FROM orders;
+    
+    SELECT totalOrder;
+END$$
+
+DELIMITER ;
+
+
+CALL GetTotalOrder();
+
+-------------------
+For example, this statement lists all stored procedures in the classicmodels database:
+
+SELECT 
+    routine_name
+FROM
+    information_schema.routines
+WHERE
+    routine_type = 'PROCEDURE'
+        AND routine_schema = 'classicmodels';
+
+
+
+
+
+

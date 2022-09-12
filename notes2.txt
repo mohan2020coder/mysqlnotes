@@ -1,0 +1,557 @@
+-- schema
+CREATE TABLE Departments (
+    Id INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(25) NOT NULL,
+    PRIMARY KEY(Id)
+);
+
+CREATE TABLE Employees (
+    Id INT NOT NULL AUTO_INCREMENT,
+    FName VARCHAR(35) NOT NULL,
+    LName VARCHAR(35) NOT NULL,
+    PhoneNumber VARCHAR(11),
+    ManagerId INT,
+    DepartmentId INT NOT NULL,
+    Salary INT NOT NULL,
+    HireDate DATETIME NOT NULL,
+    PRIMARY KEY(Id),
+    FOREIGN KEY (ManagerId) REFERENCES Employees(Id),
+    FOREIGN KEY (DepartmentId) REFERENCES Departments(Id)
+);
+
+CREATE TABLE Customers (
+    Id INT NOT NULL AUTO_INCREMENT,
+    FName VARCHAR(35) NOT NULL,
+    LName VARCHAR(35) NOT NULL,
+    Email varchar(100) NOT NULL,
+    PhoneNumber VARCHAR(11),
+    PreferredContact VARCHAR(5) NOT NULL,
+    PRIMARY KEY(Id)
+);
+
+CREATE TABLE Cars (
+    Id INT NOT NULL AUTO_INCREMENT,
+    CustomerId INT NOT NULL,
+    EmployeeId INT NOT NULL,
+    Model varchar(50) NOT NULL,
+    Status varchar(25) NOT NULL,
+    TotalCost INT NOT NULL,
+    PRIMARY KEY(Id),
+    FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
+    FOREIGN KEY (EmployeeId) REFERENCES Employees(Id)
+);
+
+-- data
+INSERT INTO Departments
+    (Id, Name)
+VALUES
+    (1, 'HR'),
+    (2, 'Sales'),
+    (3, 'Tech')
+;
+
+INSERT INTO Employees
+    (Id, FName, LName, PhoneNumber, ManagerId, DepartmentId, Salary, HireDate)
+VALUES
+    (1, 'James', 'Smith', 1234567890, NULL, 1, 1000, str_to_date('01-01-2002', '%d-%m-%Y')),
+    (2, 'John', 'Johnson', 2468101214, '1', 1, 400, str_to_date('23-03-2005', '%d-%m-%Y')),
+    (3, 'Michael', 'Williams', 1357911131, '1', 2, 600, str_to_date('12-05-2009', '%d-%m-%Y')),
+    (4, 'Johnathon', 'Smith', 1212121212, '2', 1, 500, str_to_date('24-07-2016', '%d-%m-%Y'))
+;
+
+INSERT INTO Customers
+    (Id, FName, LName, Email, PhoneNumber, PreferredContact)
+VALUES
+    (1, 'William', 'Jones', 'william.jones@example.com', '3347927472', 'PHONE'),
+    (2, 'David', 'Miller', 'dmiller@example.net', '2137921892', 'EMAIL'),
+    (3, 'Richard', 'Davis', 'richard0123@example.com', NULL, 'EMAIL')
+;
+
+INSERT INTO Cars
+    (Id, CustomerId, EmployeeId, Model, Status, TotalCost)
+VALUES
+    ('1', '1', '2', 'Ford F-150', 'READY', '230'),
+    ('2', '1', '2', 'Ford F-150', 'READY', '200'),
+    ('3', '2', '1', 'Ford Mustang', 'WAITING', '100'),
+    ('4', '3', '3', 'Toyota Prius', 'WORKING', '1254')
+;
+
+
+
+
+
+CREATE TABLE Authors (
+    Id INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(70) NOT NULL,
+    Country VARCHAR(100) NOT NULL,
+    PRIMARY KEY(Id)
+);
+
+CREATE TABLE Books (
+    Id INT NOT NULL AUTO_INCREMENT,
+    Title VARCHAR(50) NOT NULL,
+    PRIMARY KEY(Id)
+);
+
+CREATE TABLE BooksAuthors (
+    AuthorId INT NOT NULL,
+    BookId  INT NOT NULL,
+    FOREIGN KEY (AuthorId) REFERENCES Authors(Id),
+    FOREIGN KEY (BookId) REFERENCES Books(Id)
+);
+
+INSERT INTO Authors
+    (Name, Country)
+VALUES
+    ('J.D. Salinger', 'USA'),
+    ('F. Scott. Fitzgerald', 'USA'),
+    ('Jane Austen', 'UK'),
+    ('Scott Hanselman', 'USA'),
+    ('Jason N. Gaylord', 'USA'),
+    ('Pranav Rastogi', 'India'),
+    ('Todd Miranda', 'USA'),
+    ('Christian Wenz', 'USA')
+;
+
+INSERT INTO Books
+    (Id, Title)
+VALUES
+    (1, 'The Catcher in the Rye'),
+    (2, 'Nine Stories'),
+    (3, 'Franny and Zooey'),
+    (4, 'The Great Gatsby'),
+    (5, 'Tender id the Night'),
+    (6, 'Pride and Prejudice'),
+    (7, 'Professional ASP.NET 4.5 in C# and VB')
+;
+
+INSERT INTO BooksAuthors
+    (BookId, AuthorId)
+VALUES
+    (1, 1),
+    (2, 1),
+    (3, 1),
+    (4, 2),
+    (5, 2),
+    (6, 3),
+    (7, 4),
+    (7, 5),
+    (7, 6),
+    (7, 7),
+    (7, 8)
+;
+
+SELECT * FROM Authors;
+
+SELECT * FROM Books;
+
+
+
+SELECT
+ba.AuthorId,
+a.Name AuthorName,
+ba.BookId,
+b.Title BookTitle
+FROM BooksAuthors ba
+INNER JOIN Authors a ON a.id = ba.authorid
+INNER JOIN Books b ON b.id = ba.bookid
+
+
+-- schema
+CREATE TABLE Countries (
+    Id INT NOT NULL AUTO_INCREMENT,
+    ISO VARCHAR(2) NOT NULL,
+    ISO3 VARCHAR(3) NOT NULL,
+    ISONumeric INT NOT NULL,
+    CountryName VARCHAR(64) NOT NULL,
+    Capital VARCHAR(64) NOT NULL,
+    ContinentCode VARCHAR(2) NOT NULL,
+    CurrencyCode VARCHAR(3) NOT NULL,
+    PRIMARY KEY(Id)
+)
+;
+
+-- data
+INSERT INTO Countries
+    (ISO, ISO3, ISONumeric, CountryName, Capital, ContinentCode, CurrencyCode)
+VALUES
+    ('AU', 'AUS', 36, 'Australia', 'Canberra', 'OC', 'AUD'),
+    ('DE', 'DEU', 276, 'Germany', 'Berlin', 'EU', 'EUR'),
+    ('IN', 'IND', 356, 'India', 'New Delhi', 'AS', 'INR'),
+    ('LA', 'LAO', 418, 'Laos', 'Vientiane', 'AS', 'LAK'),
+    ('US', 'USA', 840, 'United States', 'Washington', 'NA', 'USD'),
+    ('ZW', 'ZWE', 716, 'Zimbabwe', 'Harare', 'AF', 'ZWL')
+;
+
+
+
+
+SELECT
+Employees.*,
+Departments.Name
+FROM
+Employees
+JOIN
+
+Departments
+ON Departments.Id = Employees.DeptId;
+
+
+
+
+SELECT FullName = FirstName + ' ' + LastName,
+Addr1
+= FullStreetAddress,
+Addr2
+= TownName
+FROM CustomerDetails;
+
+
+SELECT
+Customers.PhoneNumber,
+Customers.Email,
+Customers.PreferredContact,
+Orders.Id AS OrderId
+FROM
+Customers
+LEFT JOIN
+Orders ON Orders.CustomerId = Customers.Id
+
+
+#shortcut
+SELECT
+c.PhoneNumber,
+c.Email,
+c.PreferredContact,
+o.Id AS OrderId
+FROM
+Customers c
+LEFT JOIN
+Orders o ON o.CustomerId = c.Id
+
+
+SELECT Id, ProductName, UnitPrice, Package
+FROM Product
+ORDER BY UnitPrice DESC
+LIMIT 10
+
+
+SELECT e.Fname, e.LName, m.Fname AS ManagerFirstName
+FROM Employees e
+JOIN Managers m ON e.ManagerId = m.Id
+
+
+SELECT Fname, LName, ManagerFirstName
+FROM Employees
+NATURAL JOIN
+( SELECT Id AS ManagerId, Fname AS ManagerFirstName
+FROM Managers ) m;
+
+
+
+Average
+The AVG() aggregate function will return the average of values selected.
+SELECT AVG(Salary) FROM Employees
+Aggregate functions can also be combined with the where clause.
+SELECT AVG(Salary) FROM Employees where DepartmentId = 1
+Aggregate functions can also be combined with group by clause.
+If employee is categorized with multiple department and we want to ﬁnd avg salary for every department then we
+can use following query.
+SELECT AVG(Salary) FROM Employees GROUP BY DepartmentId
+Minimum
+The MIN() aggregate function will return the minimum of values selected.
+SELECT MIN(Salary) FROM Employees
+Maximum
+The MAX() aggregate function will return the maximum of values selected.
+SELECT MAX(Salary) FROM Employees
+Count
+The COUNT() aggregate function will return the count of values selected.
+SELECT Count(*) FROM Employees
+
+
+
+
+SELECT Count(*) FROM Employees where ManagerId IS NOT NULL
+Speciﬁc columns can also be speciﬁed to get the number of values in the column. Note that NULL values are not
+counted.
+Select Count(ManagerId) from Employees
+Count can also be combined with the distinct keyword for a distinct count.
+Select Count(DISTINCT DepartmentId) from Employees
+Sum
+The SUM() aggregate function returns the sum of the values selected for all rows.
+SELECT SUM(Salary) FROM Employees
+
+
+Getting average income by department:
+SELECT department, AVG(income)
+FROM employees
+GROUP BY department;
+
+SELECT department, AVG(income)
+FROM employees
+WHERE department <> 'ACCOUNTING'
+GROUP BY department;
+
+
+SELECT department, AVG(income)
+FROM employees
+WHERE department <> 'ACCOUNTING'
+GROUP BY department
+HAVING avg(income) > 1000;
+
+SELECT Name FROM Customers WHERE PhoneNumber IS NULL
+
+
+
+SELECT
+a.Id,
+a.Name,
+COUNT(*) BooksWritten
+FROM BooksAuthors ba
+INNER JOIN Authors a ON a.id = ba.authorid
+GROUP BY
+a.Id,
+a.Name
+HAVING COUNT(*) > 1
+
+
+SELECT
+b.Id,
+b.Title,
+COUNT(*) NumberOfAuthors
+FROM BooksAuthors ba
+INNER JOIN Books b ON b.id = ba.bookid
+GROUP BY
+b.Id,
+b.Title
+HAVING COUNT(*) > 3
+
+
+
+
+SELECT * FROM TableName LIMIT 20, 20; -- offset, limit
+
+
+Get all customers with a least one order
+SELECT * FROM Customer WHERE EXISTS (
+SELECT * FROM Order WHERE Order.CustomerId=Customer.Id
+)
+
+
+
+SELECT
+e.FName AS "Employee",
+m.FName AS "Manager"
+FROM
+Employees e
+JOIN
+Employees m
+ON e.ManagerId = m.Id
+
+
+
+CREATE TABLE A (
+X varchar(255) PRIMARY KEY);
+
+CREATE TABLE B (
+Y varchar(255) PRIMARY KEY
+);
+INSERT INTO A VALUES
+('Amy'),
+('John'),
+('Lisa'),
+('Marco'),
+('Phil');
+INSERT INTO B VALUES
+('Lisa'),
+('Marco'),
+('Phil'),
+('Tim'),
+('Vincent');
+
+SELECT * FROM A JOIN B ON X = Y;
+
+
+SELECT * FROM A LEFT JOIN B ON X = Y;
+
+
+SELECT * FROM A RIGHT JOIN B ON X = Y;
+
+
+SELECT * FROM A FULL JOIN B ON X = Y;
+
+
+SELECT * FROM A WHERE X IN (SELECT Y FROM B);
+
+SELECT * FROM B WHERE Y IN (SELECT X FROM A);
+
+
+SELECT * FROM A WHERE X NOT IN (SELECT Y FROM B);
+
+SELECT * FROM B WHERE Y NOT IN (SELECT X FROM A);
+
+
+SELECT * FROM A CROSS JOIN B;
+
+SELECT * FROM A JOIN B ON 1 = 1;
+
+
+
+SELECT * FROM A A1 JOIN A A2 ON LEN(A1.X) < LEN(A2.X);
+
+
+
+
+SELECT
+Departments.Name, Employees.FName
+FROM
+Departments
+LEFT OUTER JOIN Employees
+ON
+Departments.Id = Employees.DepartmentId
+
+SELECT e.FName, d.Name
+FROM
+Employee e, Departments d
+WHERE e.DeptartmentId = d.Id
+
+
+
+
+SELECT d.Name, e.FName
+FROM
+Departments d
+CROSS JOIN Employees e;
+
+
+
+SELECT po.Id, po.PODate, po.VendorName, po.Status, item.ItemNo,
+item.Description, item.Cost, item.Price
+FROM PurchaseOrders po
+LEFT JOIN
+(
+SELECT l.PurchaseOrderId, l.ItemNo, l.Description, l.Cost, l.Price, Min(l.id) as Id
+FROM PurchaseOrderLineItems l
+GROUP BY l.PurchaseOrderId, l.ItemNo, l.Description, l.Cost, l.Price
+) AS item ON item.PurchaseOrderId = po.Id
+
+SELECT
+storeName,
+COUNT(*) AS total_nr_orders,
+COUNT(DISTINCT userId) AS nr_unique_customers,
+AVG(orderValue) AS average_order_value,
+MIN(orderDate) AS first_order,
+MAX(orderDate) AS lastOrder
+FROM
+orders
+GROUP BY
+storeName;
+
+
+
+UPDATE
+Employees
+SET PhoneNumber =
+(SELECT
+c.PhoneNumber
+FROM
+Customers c
+WHERE
+c.FName = Employees.FName
+AND c.LName = Employees.LName)
+WHERE Employees.PhoneNumber IS NULL
+
+UPDATE Cars
+SET TotalCost = TotalCost + 100
+WHERE Id = 3 or Id = 4
+
+UPDATE
+Cars
+SET
+Status = 'READY'
+WHERE
+Id = 4
+
+
+DELETE FROM Employees
+WHERE FName = 'John'
+
+
+
+DELETE FROM Source
+WHERE EXISTS ( SELECT 1   -- specific value in SELECT doesn't matter
+FROM Target
+Where Source.ID = Target.ID )
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
