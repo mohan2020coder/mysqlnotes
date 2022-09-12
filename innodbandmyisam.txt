@@ -1,0 +1,38 @@
+
+
+
+What are MyISAM and InnoDB
+----------------------------------------
+MyISAM and InnoDB are MySQL storage engines. Storage engines are database management system components used to manipulate data from in database.
+MyISAM
+
+MyISAM stands for Indexed Sequential Access Method. It was the default storage engine for MySQL until December 2009. With the release of MySQL 5.5, MyISAM was replaced with InnoDB.
+
+MyISAM is based on an ISAM algorithm that displays information from large data sets fast. It has a small data footprint and is best suitable for data warehousing and web applications.
+
+
+InnoDB
+
+--------------------------------
+
+InnoDB has been the default storage engine for MySQL since the release of MySQL 5.5. It is best suited for large databases that hold relational data.
+
+InnoDB focuses on high reliability and performance, making it great for content management systems. One of the most known uses of InnoDB is MediaWiki software that powers Wikipedia.
+
+
+
+-----------------------------
+
+
+The PRIMARY KEY constraint uniquely identifies each record in a table.
+
+Primary keys must contain UNIQUE values, and cannot contain NULL values.
+
+A table can have only ONE primary key; and in the table, this primary key can consist of single or multiple columns (fields).
+-----------------------------------------------------
+
+The FOREIGN KEY constraint is used to prevent actions that would destroy links between tables.
+
+A FOREIGN KEY is a field (or collection of fields) in one table, that refers to the PRIMARY KEY in another table.
+
+The table with the foreign key is called the child table, and the table with the primary key is called the referenced or parent table.
